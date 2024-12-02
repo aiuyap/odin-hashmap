@@ -1,4 +1,4 @@
-function HashMap() {
+export function HashMap() {
   let capacity = 16;
   let loadFactor = 0.75;
   let buckets = new Array(capacity);
@@ -102,8 +102,3 @@ function HashMap() {
 
   return { set, get, has, remove, length, clear, keys, values, entries };
 }
-
-const myMap = HashMap();
-myMap.set("apple", "red");
-console.log(myMap.length());
-console.log(myMap.entries());
