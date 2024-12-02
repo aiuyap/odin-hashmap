@@ -24,8 +24,16 @@ function HashMap() {
     if (buckets[index]) {
       buckets[index].value = value;
     }
-
     buckets[index] = { key, value };
+    if (length() >= capacity * loadFactor) {
+      capacity *= 2;
+      const copyBuckets = [...buckets];
+      buckets = new Array(capacity);
+
+      copyBuckets.forEach((item) => {
+        set(item.key, item.value);
+      });
+    }
   }
 
   function get(key) {
@@ -76,10 +84,26 @@ function HashMap() {
     return keys;
   }
 
-  return { set, get, has, remove, length, clear, keys };
+  function values() {
+    let values = [];
+    buckets.forEach((item) => {
+      values.push(item.value);
+    });
+    return values;
+  }
+
+  function entries() {
+    let entries = [];
+    buckets.forEach((item) => {
+      entries.push([item.key, item.value]);
+    });
+    return entries;
+  }
+
+  return { set, get, has, remove, length, clear, keys, values, entries };
 }
 
 const myMap = HashMap();
 myMap.set("apple", "red");
 console.log(myMap.length());
-console.log(myMap.keys());
+console.log(myMap.entries());
